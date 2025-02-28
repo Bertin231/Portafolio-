@@ -1,0 +1,82 @@
+package com.mx.Telefonos;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+public class Implementacion implements Metodos  {
+
+	
+	
+	HashMap<Integer, Telefonos> has = new HashMap<Integer, Telefonos>();
+	
+	
+	@Override
+	public void guardar(Telefonos telefono) {
+		// TODO Auto-generated method stub
+		has.put(telefono.getClave(),telefono);
+	
+	}
+
+	@Override
+	public Telefonos buscar(Telefonos telefono) {
+		// TODO Auto-generated method stub
+		return has.get(telefono.getClave());
+	}
+
+	@Override
+	public void editar(Telefonos telefono) {
+		// TODO Auto-generated method stub
+		has.replace(telefono.getClave(), telefono);
+	}
+
+	@Override
+	public void eliminar(Telefonos telefono) {
+		// TODO Auto-generated method stub
+		has.remove(telefono.getClave());
+	}
+
+	@Override
+	public void mostrar() {
+		// TODO Auto-generated method stub
+		List<Telefonos> listaTelefonos = new ArrayList<>(has.values());
+
+        // Primero ordenamos por color de manera alfabética
+        listaTelefonos.sort(Comparator.comparing(Telefonos::getColor));
+        
+        System.out.println("---------Ordenado por color-----------");
+
+        
+        Map<String, List<Telefonos>> telefonosPorColor = new LinkedHashMap<>();
+        
+        for (Telefonos telefono : listaTelefonos) {
+            // Agrupar los teléfonos por color
+            telefonosPorColor
+                .computeIfAbsent(telefono.getColor(), k -> new ArrayList<>())
+                .add(telefono);
+        }
+
+        // Ahora mostramos los teléfonos, primero agrupados por color
+        for (Map.Entry<String, List<Telefonos>> entry : telefonosPorColor.entrySet()) {
+            System.out.println("Color: " + entry.getKey());
+
+            // Ordenar los teléfonos por precio de mayor a menor dentro de cada grupo de color
+            entry.getValue().sort((t1, t2) -> Double.compare(t2.getPrecio(), t1.getPrecio())); // Orden descendente
+
+            // Mostrar los teléfonos de cada color
+            for (Telefonos telefono : entry.getValue()) {
+                System.out.println(telefono);
+                
+                System.out.println("\nLos telefonos han sido ordenados por precio");
+            }
+        }
+    }
+	
+	public void conar() {
+		System.out.println("Contiene " + has.size() + "telefonos" );
+	}
+
+}

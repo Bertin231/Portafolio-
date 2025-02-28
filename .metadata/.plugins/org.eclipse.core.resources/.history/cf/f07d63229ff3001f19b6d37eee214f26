@@ -1,0 +1,50 @@
+package com.mx.Libro;
+// Esta Clase es la implementacion de mi interfaces y ocupamos la palabra reservada implements
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Implementacion implements IMetodos {
+
+	//declaramos una lista
+	List<Libro> lista = new ArrayList<Libro>();
+	
+	
+	@Override
+	public void guardar(Libro libro) {
+		// TODO Auto-generated method stub
+		lista.add(libro);
+	}
+
+	@Override
+	public void editar(int indice, Libro libro) {
+		// TODO Auto-generated method stub
+		lista.set(indice, libro);
+	}
+
+	@Override
+	public void mostrar() {
+		// TODO Auto-generated method stub
+		System.out.println(lista);
+	}
+
+	@Override
+	public void eliminar(int indice) {
+		// TODO Auto-generated method stub
+		lista.remove(indice);
+	}
+
+	@Override
+	public Libro buscar(int indice) {
+		// TODO Auto-generated method stub
+		return lista.get(indice);
+	}
+
+	@Override
+	public int contar() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+}

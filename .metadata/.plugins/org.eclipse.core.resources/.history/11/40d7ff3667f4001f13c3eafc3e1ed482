@@ -1,0 +1,22 @@
+package com.mx.Telefonos;
+
+import com.mx.Electrodomesticos.Electrodomesticos;
+import com.mx.Electrodomesticos.Implementacion;
+
+public class Principal {
+
+	Telefonos tel1 = new Telefonos(1,"LG","NEGRO","SI",5000);
+	Telefonos tel2 = new Telefonos(2,"Samsung","blanco","SI",9000);
+	Telefonos tel3 = new Telefonos(3,"Steam","gris","NO",7000);
+	Telefonos tel4 = new Telefonos(4,"Oppo","NEGRO","SI",15000);
+	Telefonos tel5 = new Telefonos(5,"Apple","Dorado","SI",25000);
+	
+	Telefonos elec = null;
+	
+	Implementacion imp = new Implementacion();
+	
+	
+	
+	
+	
+}

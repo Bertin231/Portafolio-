@@ -1,0 +1,25 @@
+package Estudiantes;
+
+public class Main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		Estudiante est1 = new Estudiante("B231232","Bertin", 26);
+		
+		
+		
+		Estudiante est = null;
+		
+		EstudianteServiceImpl imp = new EstudianteServiceImpl();
+		
+		imp.mostrar();
+				
+		
+		
+		
+		
+		
+	}
+
+}

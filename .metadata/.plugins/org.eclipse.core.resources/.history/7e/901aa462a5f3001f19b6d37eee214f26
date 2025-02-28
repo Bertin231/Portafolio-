@@ -1,0 +1,63 @@
+package com.mx.Movies;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class Implementacion implements Metodos  {
+
+	List<Movies> lista = new ArrayList<Movies>();
+
+	@Override
+	public void guardar(Movies movi) {
+		// TODO Auto-generated method stub
+		lista.add(movi);
+	}
+
+	@Override
+	public void editar(int cartelera, Movies movi) {
+		// TODO Auto-generated method stub
+		lista.set(cartelera, movi);
+	}
+
+	@Override
+	public void mostrar() {
+		// TODO Auto-generated method stub
+		System.out.println(lista);
+		
+		 Collections.sort(lista, (m1, m2) -> m1.getNombre().compareTo(m2.getNombre()));
+	        System.out.println("Películas ordenadas por nombre:");
+	        for (Movies movie : lista) {
+	            System.out.println(movie);
+	        }
+		
+		
+		
+	}
+
+	@Override
+	public void eliminar(int cartelera) {
+		// TODO Auto-generated method stub
+		lista.remove(cartelera);
+	}
+
+	@Override
+	public Movies buscar(int cartelera) {
+		// TODO Auto-generated method stub
+		return lista.get(cartelera);
+	}
+	
+	public void contar() {
+		int cont = lista.size();
+		System.out.println("La lsita contien:  " +cont+ " Peliculas ");
+		
+		
+	}
+		
+		
+		
+	}
+	
+	
+	
+

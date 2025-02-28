@@ -1,0 +1,94 @@
+package Entidades;
+
+public abstract class Empleado {
+
+	protected String nombre;
+	protected String apellido;
+	protected String trabajo;
+	protected int edad;
+	protected int fechaNacimiento;
+	
+	
+	public void SAL(String miSalario,double nomina){
+		System.out.println("Mi salario:  " + miSalario+ "\nEl calculo de mi nomina total es: " + nomina);
+	}
+	
+	
+	public abstract void calcularSalario();
+	
+	public Empleado() {
+		
+	}
+
+
+	public Empleado(String nombre, String apellido, String trabajo, int edad, int fechaNacimiento) {
+		super();
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.trabajo = trabajo;
+		this.edad = edad;
+		this.fechaNacimiento = fechaNacimiento;
+	}
+
+
+	public String getNombre() {
+		return nombre;
+	}
+
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+
+	public String getApellido() {
+		return apellido;
+	}
+
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+
+
+	public String getTrabajo() {
+		return trabajo;
+	}
+
+
+	public void setTrabajo(String trabajo) {
+		this.trabajo = trabajo;
+	}
+
+
+	public int getEdad() {
+		return edad;
+	}
+
+
+	public void setEdad(int edad) {
+		this.edad = edad;
+	}
+
+
+	public int getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+
+	public void setFechaNacimiento(int fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Empleado [nombre=" + nombre + ", apellido=" + apellido + ", trabajo=" + trabajo + ", edad=" + edad
+				+ ", fechaNacimiento=" + fechaNacimiento + "]\n";
+	}
+	
+	
+	
+	
+	
+}

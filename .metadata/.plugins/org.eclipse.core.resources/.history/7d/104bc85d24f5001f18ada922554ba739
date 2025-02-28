@@ -1,0 +1,18 @@
+package Entidades;
+
+public abstract class Profesionista {
+	//atributos
+	protected String nombre;
+	protected String apellido;
+	protected int edad;
+	protected int cedula;
+	protected String universidad;
+	protected int experiencia;
+	
+	
+
+	
+	
+	
+	
+}

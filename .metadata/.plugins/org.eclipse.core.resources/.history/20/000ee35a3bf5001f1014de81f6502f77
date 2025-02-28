@@ -1,0 +1,19 @@
+package Principal;
+
+import Entidades.Autobus;
+
+public class Principal {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Autobus auto = new Autobus("Micro","Naranja",125,15.220,"Lunes","Heroes - Indios Verdes","JAVIER",2015);
+		System.out.println("-------------------------------------------");
+		System.out.println(auto);
+		auto.iniciarRuta();
+		auto.RUT(auto.getNombre(),auto.getRutas());
+		
+		
+		
+	}
+
+}

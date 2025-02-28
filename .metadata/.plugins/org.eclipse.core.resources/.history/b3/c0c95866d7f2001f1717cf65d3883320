@@ -1,0 +1,47 @@
+package com.mx.Coche;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Principal {
+
+	public static void main(String[] args) {
+		
+		// Instanmciar a nuestro objeto: Mando a llamas a mi clase 
+	Coche coche1 = new Coche("Toyota", "Corola",2020, "Rojo","Automatico", 255589.70);
+	Coche coche2 = new Coche("Cupra", "Leon", 2024, "Negro", "Estandar", 700000);
+	Coche coche3 = new Coche("Ford", "Explorer", 2024, "azul", "automatico", 302452.50);
+	Coche coche4 = new Coche("Chevrolet", "Cabalier", 2022, "Azul", "estandar", 30673.70);
+	Coche coche5= new Coche ("Chevrolet","Aveo", 2023, "Negro", "Estandar", 555589.70);
+	Coche coche6 = new Coche("Honda",  "Civic", 2004, "Plata", "Automático", 40000.00);
+
+	
+	//asignarle un valor de busqueda
+	//se declara en nulo para despues asignarle el valor que se requiera
+	Coche auxCoche = null;
+	
+	
+	//Creacion de lista
+	//Es una estructura de datos que permite almacenar elementos de manera ordenada
+	// se utiliza la libreria java.util. que nos ofrece la interfaz de list
+	//list proporciona los metodos: añadir, eliminar , modificar y visualizar elementos dentro de la lista
+	//new ArrayList<> es una implementacion concreta de la interfaz list que realiza un arreglo dinamico para almacenar informacion
+	List<Coche> lista = new ArrayList<Coche>();
+	
+	//agregasr elementos a las listas 
+	// usa el metodo ad
+	
+	lista.add(coche1);
+	lista.add(coche2);
+	lista.add(coche3);
+	lista.add(coche4);
+	lista.add(coche5);
+	lista.add(coche6);
+
+	// visualizar la informacion de la lista 
+	// usamos metodo de impresion
+	System.out.println(lista);
+
+	}
+
+}

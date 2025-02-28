@@ -1,0 +1,22 @@
+package Entidades;
+
+public class Alimento extends Producto {
+    private String fechaExpiracion;
+
+    // Constructor
+    public Alimento(String codigo, String nombre, double precio, String fechaExpiracion) {
+        super(codigo, nombre, precio);
+        this.fechaExpiracion = fechaExpiracion;
+    }
+
+    // Getter para la fecha de expiración
+    public String getFechaExpiracion() {
+        return fechaExpiracion;
+    }
+
+    @Override
+    public void mostrarDetalles() {
+        super.mostrarDetalles();
+        System.out.println("Fecha de expiración: " + fechaExpiracion);
+    }
+}

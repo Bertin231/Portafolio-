@@ -1,0 +1,12 @@
+package Principal;
+
+import Entidades.Autobus;
+
+public class Principal {
+
+	Autobus auto = new Autobus("Micro","Naranja",125,15.220,"Lunes","Heroes - Indios Verdes","JAVIER",2015);
+	
+}
+	
+	
+}

@@ -1,0 +1,46 @@
+package com.mx.Movies;
+
+public class Principal {
+
+	public static void main(String[] args) {
+		
+		
+		Movies movi0 = new Movies("Avengers","accion",2018,27.50,"stan lee");
+		Movies movi1 = new Movies("Lost","suspenso",2020,25.50,"arturo");
+		Movies movi2 = new Movies("Spider-man","accion",2215,25.50,"stan lee");
+		Movies movi3 = new Movies("Thor","accion",2025,24.50,"stan lee");
+		Movies movi4 = new Movies("Alicia","terror",2019,28.50,"maria garza");
+		Movies movi5 = new Movies("Precius","amor",2017,26.50,"jose cuevas");
+
+		
+		Movies movi = null;
+		
+		Implementacion im = new Implementacion();
+		
+		im.guardar(movi0);
+		im.guardar(movi1);
+		im.guardar(movi2);
+		im.guardar(movi3);
+		im.guardar(movi4);
+		im.guardar(movi5);
+		
+		
+		im.mostrar();
+		
+		
+		movi = im.buscar(0);
+		System.out.println("Pelicual encontarda" + movi);
+		
+		
+		movi = im.buscar(2);
+		movi.setAño(222222);
+		movi.setPrecio(0000000);
+		im.mostrar();
+		
+		im.eliminar(0);
+		im.mostrar();
+		
+		im.contar();
+	}
+
+}

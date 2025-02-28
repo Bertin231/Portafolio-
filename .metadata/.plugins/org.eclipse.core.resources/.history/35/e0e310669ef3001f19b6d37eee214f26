@@ -1,0 +1,52 @@
+package com.mx.Libro;
+
+public class Principal {
+
+	public static void main(String[] args) {
+		// intanciamos el objeto
+		Libro libro1 = new Libro("Los juegos del hambre","Suzzane Collins","Alafaguara", 555,350.50);
+		Libro libro2 = new Libro("La chica del tren", "Paula Hawkins", "PlanetaLibros", 700, 250);
+		Libro libro3 = new Libro("Los cuatro acuerdos", "Miguel Ruíz", "Urano", 160, 450.00);
+		Libro libro4 =new Libro("El trono de hielo", "azusena", "diamante", 650, 730.60);
+		Libro libro5 = new Libro("12 años de esclavo","paulos","rose", 750,375.70);
+		Libro libro6 = new Libro("Cartas de amor a los muertos", "Ava Dellaira", "Farrar", 336, 300);
+		
+		//objeto auxiliar 
+		Libro libro = null;
+		
+		//mandar a llamar mi clase de implemntacion para poder ocupar sus metodos 
+		Implementacion imp = new Implementacion();
+		
+		//agregar datos a la lista 
+		imp.guardar(libro1);
+		imp.guardar(libro2);
+		imp.guardar(libro3);
+		imp.guardar(libro4);
+		imp.guardar(libro5);
+		imp.guardar(libro6);
+		
+		//usando metodo mostrar es para imprimir
+		imp.mostrar();
+		
+		//Para buscar se coloca asi 
+		libro = imp.buscar(2);
+		System.out.println("Libro encontrado" + libro);
+		
+		//editar
+		libro = imp.buscar(0);
+		libro.setAutor("Bertin");
+		libro.setPrecio(2.1);
+		imp.editar(0, libro);
+		imp.mostrar();
+		
+		//eliminar 
+		imp.eliminar(5);
+		imp.mostrar();
+		
+		//contar
+		imp.contar();
+		System.out.println("hay muchos"+ libro);
+
+	} 
+
+}

@@ -1,0 +1,70 @@
+package com.mx.Consolas;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
+
+
+public class Principal {
+
+	public static void main(String[] args) {
+		
+		Consolas consola0 = new Consolas("Play2","sony",10.000,2015,"negro");
+		Consolas consola1 = new Consolas("XBOX","microsoft",20.000,2025,"Blanco");
+		Consolas consola2 = new Consolas("NINTENDO","nin",30.000,2020,"Verde");
+		Consolas consola3 = new Consolas("NES","neogeo",10.000,2014,"Morado");
+		Consolas consola4 = new Consolas("GAMEBOY","nin",11.000,2017,"Gris");
+		Consolas consola5 = new Consolas("ATARI","extrem",20.000,2018,"Azul");
+		
+		
+		Consolas auxConsolas = null;
+		
+		List<Consolas> lista = new ArrayList<Consolas>();
+		
+		lista.add(consola0);
+		lista.add(consola1);
+		lista.add(consola2);
+		lista.add(consola3);
+		lista.add(consola4);
+		lista.add(consola5);
+		
+		System.out.println(lista);
+		
+		Collections.sort(lista, (c1, c2) -> Double.compare(c2.getPrecio(), c1.getPrecio()));
+
+        // Mostrar la lista ordenada
+        System.out.println("Consolas ordenadas por precio (de mayor a menor):");
+        for (Consolas consola : lista) {
+            System.out.println(consola);
+        }
+    }
+		 
+		
+		
+		//metodo 1
+		//auxConsolas = lista.get(0);
+		//System.out.println("Datos encontrados" + auxConsolas);
+		
+		//auxConsolas = lista.get(1);
+		//auxConsolas.setColor("DORADO");
+		//auxConsolas.setNombre("PC");
+		//System.out.println("Elemento editado: " + auxConsolas);
+		
+		//auxConsolas = lista.get(3);
+		//lista.remove(3);
+		//System.out.println("Lista Actualizada: " + lista);
+		
+		//System.out.println("Existen: " + lista.size() + "Consolas en la lista");
+		
+		//lista.clear();
+		
+		//if(lista.isEmpty()) {
+			//System.out.println("No hay consolas");
+		//}else{
+			//System.out.println("la lista is \n" + lista);
+			
+		//}
+
+	}
+
+}

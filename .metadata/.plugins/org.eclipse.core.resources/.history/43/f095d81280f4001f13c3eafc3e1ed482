@@ -1,0 +1,36 @@
+package Principal;
+
+import Entidades.Animales;
+import Implementacion.ImpAnimales;
+
+public class Principal {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		Animales ani1 = new Animales(1,"Perro","canino","blanco",5,10);
+		Animales ani2 = new Animales(2,"Gato","Gatuno","negro",10,2);
+		Animales ani3 = new Animales(3,"Perico","Ave","verde",15,3);
+		Animales ani4 = new Animales(4,"Vaca","Animal","blanco",20,6);
+		Animales ani5 = new Animales(5,"Raton","Ruedor","gris",25,7);
+		
+		
+		Animales anima = null;
+		
+		ImpAnimales impA = new  ImpAnimales();
+		
+		impA.guardar(ani1.getNombre(), ani1);
+		impA.guardar(ani2.getNombre(), ani2);
+		impA.guardar(ani3.getNombre(), ani3);
+		impA.guardar(ani4.getNombre(), ani4);
+		impA.guardar(ani5.getNombre(), ani5);
+		
+		impA.mostrar();
+		
+		
+		
+		
+		
+	}
+
+}
