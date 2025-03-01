@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="java.lang.System"/>
     <fullyQualifiedTypeName name="java.util.concurrent.ExecutionException"/>
     <fullyQualifiedTypeName name="java.util.HashMap"/>
@@ -12,4 +11,5 @@
     <fullyQualifiedTypeName name="Entidades.Abogado"/>
     <fullyQualifiedTypeName name="Entidades.Medico"/>
     <fullyQualifiedTypeName name="Entidades.Transporte"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
 </qualifiedTypeNameHistroy>
