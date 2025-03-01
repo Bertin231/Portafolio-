@@ -32,7 +32,7 @@ public class Principal {
 		videojuegos[3].entregar();
 		
 		
-		
+		//contar los entregados 
 		int entregadosSeries = 0;
 		int entregadosVideojuegos = 0;
 		
