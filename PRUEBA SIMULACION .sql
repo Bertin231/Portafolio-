@@ -1,0 +1,301 @@
+ALTER SESSION SET "_ORACLE_SCRIPT" = TRUE;
+
+CREATE USER PRUEBA IDENTIFIED BY PRUEBA12345;
+
+GRANT ALL PRIVILEGES TO PRUEBA;
+
+
+--Parte 1: Creación de Esquema de Tablas
+-------------------------------------------------------------------------------------------------
+
+CREATE TABLE DEPARTAMENTO(
+ID_DEPARTEMENTO NUMBER,
+NOMBRE NVARCHAR2(100),
+CONSTRAINT DEP_PK PRIMARY KEY(ID_DEPARTEMENTO)
+);
+
+INSERT INTO DEPARTAMENTO VALUES (1,'RECURSOS HUMANOS');
+INSERT INTO DEPARTAMENTO VALUES (2,'CONTABILIDAD');
+INSERT INTO DEPARTAMENTO VALUES (3,'REDES');
+INSERT INTO DEPARTAMENTO VALUES (4,'QUIMICA');
+INSERT INTO DEPARTAMENTO VALUES (5,'SECRETARIADO');
+COMMIT;
+
+CREATE TABLE EMPLEADO(
+ID_EMPLEADO NUMBER,
+NOMBRE NVARCHAR2(100),
+DEPARTAMENTO_ID NUMBER,
+SALARIO NUMBER,-- 1 ALTO 2 MEDIO 3 BAJO 
+FECHA_INGRESO NVARCHAR2(100),
+CONSTRAINT EM_PK PRIMARY KEY (ID_EMPLEADO),
+CONSTRAINT DEP_FK FOREIGN KEY (DEPARTAMENTO_ID) REFERENCES DEPARTAMENTO (ID_DEPARTEMENTO)
+);
+
+INSERT INTO EMPLEADO VALUES (1,'JOSE',NULL,5000,'13/05/2024');
+INSERT INTO EMPLEADO VALUES (2,'BERTIN',NULL,7000,'15/02/2023');
+INSERT INTO EMPLEADO VALUES (3,'URIEL',1,8000,'7/01/2024');
+INSERT INTO EMPLEADO VALUES (4,'ISAI',NULL,6000,'9/06/2022');
+INSERT INTO EMPLEADO VALUES (5,'JHOANA',2,9000,'1/01/2024');
+INSERT INTO EMPLEADO VALUES (6,'AIDE',3,15000,'15/02/2025');
+INSERT INTO EMPLEADO VALUES (7,'MARY',NULL,3000,'16/02/2025');
+COMMIT;
+
+
+CREATE TABLE PROYECTO(
+ID_PROYECTO NUMBER,
+NOMBRE NVARCHAR2(100),
+FEHCA_INICIO DATE,
+FECHA_FIN DATE,
+CONSTRAINT PR_PK PRIMARY KEY (ID_PROYECTO)
+);
+
+INSERT INTO PROYECTO VALUES (1,'REDES CODIF','15/02/2024','15/02/2025');
+INSERT INTO PROYECTO VALUES (2,'APOYO TRABAJO','17/03/2021','13/04/2022');
+INSERT INTO PROYECTO VALUES (3,'QUIMICOS FUC','20/08/2022','19/012/2023');
+INSERT INTO PROYECTO VALUES (4,'TAQUIGRAFIA','21/06/2023','10/11/2024');
+INSERT INTO PROYECTO VALUES (5,'OPERACIONALES','25/05/2023','26/05/2024');
+COMMIT;
+
+
+CREATE TABLE ASIGNACION(
+ID_ASIGNACION NUMBER,
+EMPLEADO_ID NUMBER,
+PROYECTO_ID NUMBER,
+HORAS_TRABAJADAS NUMBER,
+CONSTRAINT AS_PK PRIMARY KEY (ID_ASIGNACION),
+CONSTRAINT EM_FK FOREIGN KEY (EMPLEADO_ID)REFERENCES EMPLEADO (ID_EMPLEADO),
+CONSTRAINT PR_FK FOREIGN KEY (PROYECTO_ID)REFERENCES PROYECTO (ID_PROYECTO)
+);
+
+INSERT INTO ASIGNACION VALUES (1,5,NULL,20);
+INSERT INTO ASIGNACION VALUES (2,6,4,40);
+INSERT INTO ASIGNACION VALUES (3,7,4,50);
+INSERT INTO ASIGNACION VALUES (4,2,3,100);
+INSERT INTO ASIGNACION VALUES (5,1,1,10);
+INSERT INTO ASIGNACION VALUES (6,3,2,80);
+INSERT INTO ASIGNACION VALUES (7,4,NULL,120);
+COMMIT;
+
+SELECT * FROM DEPARTAMENTO;
+SELECT * FROM EMPLEADO;
+SELECT * FROM PROYECTO;
+SELECT * FROM ASIGNACION;
+
+
+--Parte 2: Consultas SQL
+----------------------------------------------------------------------------------------------------------
+--2. Consultas con Funciones de Agregación
+--EL SALARIO PROMEDIO DE LOS EMPLEADOS EN CADA DEPARTAMENTO
+SELECT 
+AVG (SALARIO)SALARIO_PROMEDIO ,
+(
+CASE DEPARTAMENTO_ID 
+WHEN 1 THEN 'RECURSOS HUMANOS'
+WHEN 2 THEN 'CONTABILIDAD'
+WHEN 3 THEN 'REDES'
+WHEN 4 THEN 'QUIMICA'
+WHEN 5 THEN 'SECRETARIADO'
+ELSE 'EL DEPARTAMENTO NO EXISTE'
+END
+)AS DEPARTAMENTO
+FROM EMPLEADO E
+INNER JOIN DEPARTAMENTO D
+ON E.DEPARTAMENTO_ID = D.ID_DEPARTEMENTO
+GROUP BY 
+D.ID_DEPARTEMENTO;
+
+--EL NUMERO TOTAL DE PROYECTOS ASIGNADOS A EMPLEADO
+SELECT 
+E.ID_EMPLEADO,
+E.NOMBRE,
+COUNT(A.PROYECTO_ID)AS NUMERO_TOTAL_PROYECTOS
+FROM
+EMPLEADO E 
+LEFT JOIN ASIGNACION A 
+ON E.ID_EMPLEADO = A.EMPLEADO_ID 
+GROUP BY 
+E.ID_EMPLEADO, E.NOMBRE
+ORDER BY 
+NUMERO_TOTAL_PROYECTOS DESC;
+
+--La duración total de cada proyecto (diferencia entre la fecha de inicio y la fecha de fin).
+SELECT ID_PROYECTO,
+NOMBRE,
+FEHCA_INICIO,
+FECHA_FIN,
+(FECHA_FIN - FEHCA_INICIO)AS DURACION_DIAS
+FROM PROYECTO;
+
+--3. Consultas con JOINs
+
+--Los nombres de los empleados junto con el nombre del departamento al que pertenecen.
+SELECT 
+    D.NOMBRE AS NOMBRE_DEPARTAMENTO,
+    COUNT(E.ID_EMPLEADO) AS NUMERO_DE_EMPLEADOS
+FROM 
+    EMPLEADO E
+LEFT JOIN 
+    DEPARTAMENTO D ON E.DEPARTAMENTO_ID = D.ID_DEPARTEMENTO
+GROUP BY 
+    D.NOMBRE;
+    
+
+--Los nombres de los proyectos junto con los nombres de los empleados asignados a esos proyectos y las horas trabajadas.
+SELECT 
+    P.NOMBRE AS NOMBRE_PROYECTO,
+    E.NOMBRE AS NOMBRE_EMPLEADO,
+    COUNT(E.ID_EMPLEADO) AS NUMERO_EMPLEADOS
+FROM 
+    PROYECTO P
+LEFT JOIN 
+    ASIGNACION A ON A.PROYECTO_ID = P.ID_PROYECTO
+LEFT JOIN 
+    EMPLEADO E ON E.ID_EMPLEADO = A.EMPLEADO_ID
+GROUP BY 
+    P.NOMBRE, E.NOMBRE;
+
+--4. Consultas con CASE
+--Mostrar el salario de los empleados junto con una etiqueta que indique si el salario es "Alto" (> 5000), "Medio" (2000-5000) o "Bajo" (< 2000).
+SELECT 
+    ID_EMPLEADO,
+    NOMBRE,
+    SALARIO,
+    CASE 
+        WHEN SALARIO > 5000 THEN 'ALTO'
+        WHEN SALARIO BETWEEN 2000 AND 5000 THEN 'MEDIO'
+        WHEN SALARIO < 2000 THEN 'BAJO'
+        ELSE 'NO GANAS NADA'
+    END AS SALARIO_ETIQUETA
+FROM 
+    EMPLEADO;
+
+--Mostrar el nombre del proyecto y la duración del proyecto, junto con una etiqueta que indique si el proyecto está "Activo" (si la fecha actual está dentro del rango) o "Inactivo".
+SELECT 
+    ID_PROYECTO,
+    NOMBRE,
+    FEHCA_INICIO,
+    FECHA_FIN,
+    CASE 
+        WHEN SYSDATE BETWEEN FEHCA_INICIO AND FECHA_FIN THEN 'ACTIVO'
+        ELSE 'INACTIVO'
+    END AS ESTADO_PROYECTO
+FROM 
+    PROYECTO;
+    
+--Parte 3: Procedimientos PL/SQL
+--Crea un procedimiento que:
+--Tome como parámetro el ID_DEPARTAMENTO.
+--Imprima los nombres y salarios de todos los empleados en ese departamento.
+--Si el departamento no tiene empleados, imprima un mensaje indicando que no hay empleados en ese departamento.
+CREATE OR REPLACE PROCEDURE Imprimir_Empleados_Departamento(p_id_departamento IN NUMBER) IS
+   
+    CURSOR empleados_cursor IS
+        SELECT nombre, salario
+        FROM empleado
+        WHERE departamento_id = p_id_departamento;
+    
+
+    v_nombre empleado.nombre%TYPE;
+    v_salario empleado.salario%TYPE;
+    
+
+    v_num_empleados NUMBER := 0;
+BEGIN
+
+    OPEN empleados_cursor;
+    
+    LOOP
+   
+        FETCH empleados_cursor INTO v_nombre, v_salario;
+        
+     
+        EXIT WHEN empleados_cursor%NOTFOUND;
+        
+      
+        v_num_empleados := v_num_empleados + 1;
+        
+      
+        DBMS_OUTPUT.PUT_LINE('Empleado: ' || v_nombre || ' | Salario: ' || v_salario);
+    END LOOP;
+    
+   
+    IF v_num_empleados = 0 THEN
+        DBMS_OUTPUT.PUT_LINE('No hay empleados en este departamento.');
+    END IF;
+    
+    CLOSE empleados_cursor;
+END;
+/
+
+SET SERVEROUTPUT ON;
+EXEC Imprimir_Empleados_Departamento(1);
+
+
+--Parte 4: Ejercicio de Aplicación
+
+--Calcule el total de horas trabajadas por cada empleado en todos los proyectos.
+--Actualice la tabla EMPLEADO con un nuevo campo TOTAL_HORAS que almacene este total.
+--Imprima un mensaje para cada empleado indicando el total de horas trabajadas.
+
+ALTER TABLE EMPLEADO
+ADD TOTAL_HORAS NUMBER DEFAULT 0;
+
+CREATE OR REPLACE PROCEDURE Calcular_Horas_Trabajadas IS
+   
+    CURSOR empleados_cursor IS
+        SELECT A.EMPLEADO_ID, SUM(A.HORAS_TRABAJADAS) AS TOTAL_HORAS
+        FROM ASIGNACION A
+        GROUP BY A.EMPLEADO_ID;
+        
+ 
+    v_empleado_id EMPLEADO.ID_EMPLEADO%TYPE;
+    v_total_horas NUMBER;
+BEGIN
+  
+    FOR empleado_record IN empleados_cursor LOOP
+      
+        v_empleado_id := empleado_record.EMPLEADO_ID;
+        v_total_horas := empleado_record.TOTAL_HORAS;
+        
+       
+        UPDATE EMPLEADO
+        SET TOTAL_HORAS = v_total_horas
+        WHERE ID_EMPLEADO = v_empleado_id;
+        
+    
+        DBMS_OUTPUT.PUT_LINE('Empleado ID: ' || v_empleado_id || ' | Total de horas trabajadas: ' || v_total_horas);
+    END LOOP;
+    
+  
+    COMMIT;
+END;
+/
+
+EXEC Calcular_Horas_Trabajadas;
+
+SELECT ID_EMPLEADO, NOMBRE, TOTAL_HORAS
+FROM EMPLEADO;
+
+--7. Crear y Consultar una Vista
+CREATE OR REPLACE VIEW Vista_Empleados_Departamento_Horas AS
+SELECT 
+    E.ID_EMPLEADO, 
+    E.NOMBRE AS NOMBRE_EMPLEADO, 
+    D.NOMBRE AS DEPARTAMENTO,
+    NVL(SUM(A.HORAS_TRABAJADAS), 0) AS TOTAL_HORAS_TRABAJADAS
+FROM 
+    EMPLEADO E
+LEFT JOIN 
+    DEPARTAMENTO D ON E.DEPARTAMENTO_ID = D.ID_DEPARTEMENTO
+LEFT JOIN 
+    ASIGNACION A ON E.ID_EMPLEADO = A.EMPLEADO_ID
+GROUP BY 
+    E.ID_EMPLEADO, E.NOMBRE, D.NOMBRE;
+    
+    SELECT * 
+FROM Vista_Empleados_Departamento_Horas
+WHERE TOTAL_HORAS_TRABAJADAS > 100;
+
+SELECT * 
+FROM Vista_Empleados_Departamento_Horas
+WHERE NOMBRE_EMPLEADO LIKE '%A%';
